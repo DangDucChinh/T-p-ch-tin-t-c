@@ -1,0 +1,86 @@
+
+//----------------------- Cấu hình redux (.) App------------------------------------------
+// trong App.js , cung cấp provider from 'react-redux' . Sau đó bao trọn toàn
+bộ Browser Router vào trong đó , thuộc tính store của Provider cũng được cung cấp 
+đầy đủ . 
+const store = ConfiguresStore() // cấu hình store .
+// tất nhiên để cấu hình được chúng ta cần import Consfigures ngay tại App.js
+
+
+// trong ConfiguresStore , có {createSore } from 'redux'
+và { Rududer , initialState}  from './reducer' // tệp reducer.js 
+trong đó tạo ra 1 store , cấu hình ( gồm Reducer và initialState ) , sau đó return
+export const ConfigurationStore = ()=>{
+	const store = createStore(
+	Reducer , 
+	initialState ) ; 
+
+	return store ; 
+}
+
+// trong reducer.js , tệp này chứa state của Reducer Redux , nó gồm 
+// +, 1 initialState chứa trạng thái ban đầu của các thuộc tính như dishes , comments , leaders 
+// +, 2 Reducer chứa 
+	Reducer = (state = initialState , action)=>{
+	 // cập nhật State thông qua các action 
+		return state ; 
+	}
+
+
+
+// trong MainComponet , export default withRouter((connect(tên hàm chuyển state thành props )(Main))) ; 
+// vì thế cần import {connect} from 'react-redux' ; và { withRoter } from 'react-router-dom'
+
+// hàm chuyển state sang props : 
+truyền vào state , gán các props như leaders, dishes = state.leaders , state.dishes
+const mapStateToProps = state =>{
+	leaders : state.leaders  .... 
+}
+// hệ quả là ta chỉ cần dùng props để nhận chuyển dữ liệu 
+
+
+
+
+
+//---------------------------------- react-redux-form----------------
+// trong Contact, import { Control, LocalForm, Erros} from react-readux-form
+
+// Ko cần this.state(thuộc tính form ) và handleInputChange ( hàm thay đổi trạng thái khi có
+event ) và cả handleBlur(hàm thay đổi state khi các input được kiểm tra .. ) do redux-form
+quản lí rồi ( có lẽ thông qua model ??) *
+
+//hanleSumit thì giữ , các phần validateform thì ko cần giữ vì redux-form valited
+// chuyển Form(reacstrap) thành LocalForm ( redux) và FormGroup thành <Row classname="form-group">
+
+<LocalForm onSubmit={(values)=>this.handleSumit(values)}>  ... </LocalForm>
+//loai bỏ formFeedback ( dùng của redux ) 
+
+// DÙng các quy tắc hỗ trợ của redux-form : biến Input (react-strap) thành Control.text / .checkbox/.select/.textarea
+và có thuộc tính model=".name" cùng boostrap className="form-control"/"form-check-input"
+
+// cập nhật handleSubmit : handleSumit(values){ values ... } + loại prevenDefault(event) 
+
+
+
+
+
+
+//------------------------- Validate redux-form -----------------------
+// b1. xây dựng các hàm cho phép trả về giá trị validated
+
+const required = (val) => val && val.length;
+const maxLength = (len) => (val) => !(val) || (val.length <= len);
+const minLength = (len) => (val) => val && (val.length >= len);
+const isNumber = (val) => !isNaN(Number(val));
+const validEmail = (val) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
+
+//b2. dùng thuộc tính : validator={{  required, minLength: minLength(3), ... }} // các hàm validated
+//b3 Dùng thẻ <Errors 
+	className='text-danger'
+	model='.name' // để theo dõi validate
+	show="touched" // đã được chạm vào 
+	messages={{ required:'Được yêu cầu - Required' , 
+			minLength:'Lời nhắn .... '}} />
+
+
+

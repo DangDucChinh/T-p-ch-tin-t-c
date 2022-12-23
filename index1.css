@@ -1,0 +1,46 @@
+
+.sidebar{
+    border: 1px solid black ;
+    margin-left: 10px;
+    height: 500px; 
+    background-color: aquamarine;
+}
+#straight{
+    height: 5px;
+    width: 100%;
+    background-color: black;
+    margin-bottom: 40px;
+}
+.content{
+    border: 1ps solid black;
+}
+.row {
+    margin-bottom: 20px;
+}
+#btn-search{
+    margin-right: 20px;
+    float :right; 
+}
+.footer{
+    background-color: black;
+    padding-bottom: 30px;
+}
+.links{
+    margin: 0 auto ; 
+}
+h4{
+    text-align: center;
+}
+.footer > div{
+    padding-top : 30px ; 
+}
+@media screen and (max-width: 768px) {
+    #btn-search{
+        float: left;
+        width: 100%;
+        background-color: brown;
+    }
+  }
+
+
+

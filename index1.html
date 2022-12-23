@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">  
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <!-- code trên là nháp -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="index1.css" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+      $(document).ready(function(){
+
+        tintuc('top-headlines?&lang=en'); // câu 1 
+
+        // câu 2 
+        var tam1 = "", tam2 = "" ; 
+        $("#btn-search").click(function(){
+          $("#click-search").click(function(){
+            tam1 = $("#textbox-search").val() ;
+            tam2 = $("#country-search").val() ; 
+            tintuc('search?q='+tam1+'&country='+tam2) ;
+            tam1 = "" ; tam2="" ;   
+          });
+          alert("Thực hiện tìm kiếm bởi nút !!!") ; 
+        });
+      });
+      // fetch('https://gnews.io/api/v4/search?q=example&token=API-Token')
+      // câu 3 đã viết sẵn vào hàm
+      function tintuc(chuoi){
+
+        fetch('https://gnews.io/api/v4/'+chuoi+'&token=35f43ed9e25540a6a69335a61ca37013')
+        // viết thêm truy vấn lấy tiếng anh 
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (data) {
+            var output = `` ; 
+            // hỏi là tại sao 10 thì được mà > 10 thì lỗi ?
+            for(let i=0;i<10;i++){           
+            var demuc = data.articles[i] ; 
+            output+= 
+            `<div class="row">
+                      <img src="${demuc.image}" alt="hinh-anh" class="col-lg-4 col-md-6 col-sm-12 col-xs-12">  
+                      <div class="col-lg-8 col-md-6 col-sm-12 col-xs-12">
+                        <a href="${demuc.url}" target="_blank"><h3>${demuc.title}</h3></a>
+                        <i>${demuc.publishedAt}</i>
+                        <p>${demuc.description}<p>
+                      </div>
+            </div>`;
+          }
+            $('.content').html(output) ;
+        });
+      }
+
+
+    </script>
+</head>
+<body>
+    
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">Tin Tức 24h</a>
+          </div>
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#">News</a></li>
+            <li><a href="#">World</a></li>
+            <li><a href="#">Business</a></li>
+            <li><a href="#">Sport</a></li>
+          </ul>
+          <button 
+              type="button" class="btn btn-info btn-lg" data-toggle="modal" 
+              data-target="#myModal" id="btn-search">Search</button>
+        <!-- button bấm -->
+        </div>
+      </nav>
+      <!-- Modal -->
+      <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+      
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Search with search modal : </h4>
+            </div>
+            <div class="modal-body">
+              <label>Key words : </label>
+              <input type="text" id="textbox-search" style="margin-left: 0px"><br>
+              <label>Country : </label>
+              <select name="country" id="country-search" style="margin-left: 16px">
+                <option value="">Any</option>
+                <option value="br">Brazil</option>
+                <option value="ca">Canada</option>
+                <option value="cn">China</option>
+                <option value="de">Germany</option>
+                <option value="jp">Japan</option>
+                <option value="pt">Portugal</option>
+                <option value="sp">Singapore</option>
+                <option value="us">United States</option>
+                <option value="gb">United Kingdom</option>
+              </select>
+
+              <!-- Australia	au
+Brazil	br
+Canada	ca
+Switzerland	ch
+China	cn
+Germany	de -->
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" id="click-search">Search</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="straight"></div>
+      <div class="body">
+          <div class="container">
+              <div class="row">
+                <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+                  <div class="content">
+                    <!-- code thân trang  -->
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                  <div class="sidebar">
+                    <h4 style="text-align: center;">Đặt quảng cáo</h4>
+                  </div>
+                </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="footer">
+        <div class="container-fluid">
+          <div class="row footer">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 col1 footer_left">
+                <h4 style="color: white;text-align: left;" class="col1">Subscribe</h4>
+                <p style="color:white" class="col1">To get special offers and VIP treatment:</p>
+                 <p class="col1"><input class="" type="text" placeholder="Enter e-mail" style="width:90%"></p>
+               <button style="float: left;background-color: rgb(156, 6, 6);color: white;" type="button" class="col1">Subscribe</button>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 footer_center">
+                <h4 style="color: white;text-align: left;">Contact</h4>
+                <p style="color: white;">Questions? Go ahead.</p>
+                <form action="/action_page.php" target="_blank">
+                  <p><input class="" type="text" placeholder="Name" name="Name" required></p>
+                  <p><input class="" type="text" placeholder="Email" name="Email" required></p>
+                  <p><input class="" type="text" placeholder="Subject" name="Subject" required></p>
+                  <p><input class="" type="text" placeholder="Message" name="Message" required></p>
+                  <p><button type="submit" class="" style="background-color: rgb(156, 6, 6);color: white;">Send</button></p>
+                </form>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 footer_right">
+                <h4 style="color: white;">About</h4>
+                <p style="text-align:center"><a href="#">About us</a></p>
+                <p style="text-align:center"><a href="#">We're hiring</a></p>
+                <p style="text-align:center"><a href="#">Support</a></p>
+                <p style="text-align:center"><a href="#">Find store</a></p>
+                <p style="text-align:center"><a href="#">Payment</a></p>
+                <p style="text-align:center"><a href="#">Gift card</a></p>
+                <p style="text-align:center"><a href="#">Return</a></p>
+                <p style="text-align:center"><a href="#">Help</a></p>
+            </div>
+        </div>       
+        </div>
+      </div>
+
+</body>
+</html>
